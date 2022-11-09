@@ -1,21 +1,6 @@
-import React, { createContext, useContext } from "react";
-
-// Types
-
-interface Task {
-  id: string;
-  text: string;
-}
-
-interface List {
-  id: string;
-  text: string;
-  tasks: Task[];
-}
-
-export interface AppState {
-  lists: List[];
-}
+import React, { createContext, useContext, Dispatch, useReducer } from "react";
+import { appStateReducer, AppState, List, Task } from "./appStateReducer";
+import { Action } from "./actions";
 
 // State
 
@@ -58,6 +43,7 @@ const appData: AppState = {
 type AppStateContextProps = {
   lists: List[];
   getTasksByListId(id: string): Task[];
+  dispatch: Dispatch<Action>;
   children?: React.ReactNode;
 };
 
@@ -66,6 +52,7 @@ const AppStateContext = createContext({} as AppStateContextProps);
 //   Provider
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
+  const [state, dispatch] = useReducer(appStateReducer, appData);
   const { lists } = appData;
 
   const getTasksByListId = (id: string) => {
@@ -73,7 +60,7 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   };
 
   return (
-    <AppStateContext.Provider value={{ lists, getTasksByListId }}>
+    <AppStateContext.Provider value={{ lists, getTasksByListId, dispatch }}>
       {children}
     </AppStateContext.Provider>
   );
