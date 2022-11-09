@@ -1,4 +1,4 @@
-import React, { FC, createContext } from "react";
+import React, { createContext, useContext } from "react";
 
 // Types
 
@@ -77,4 +77,10 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
       {children}
     </AppStateContext.Provider>
   );
+};
+
+// Hooks
+
+export const useAppState = () => {
+  return useContext(AppStateContext);
 };
