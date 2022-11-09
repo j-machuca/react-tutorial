@@ -1,10 +1,11 @@
 import React from "react";
-import { AppContainer } from './styles'
+import { AppContainer } from "./styles";
+import { AddNewItem } from "./AddNewItem";
 
 function App() {
   return (
     <AppContainer>
-      Columns will go here
+      <AddNewItem toggleButtonText="+ Add another list" onAdd={console.log} />
     </AppContainer>
   );
 }
