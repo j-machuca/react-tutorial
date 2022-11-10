@@ -1,4 +1,8 @@
-import React, { createContext, useContext, Dispatch, useReducer } from "react";
+// Libraries 
+import React, { createContext, useContext, Dispatch } from "react";
+import { useImmerReducer } from "use-immer";
+
+// Own Files
 import { appStateReducer, AppState, List, Task } from "./appStateReducer";
 import { Action } from "./actions";
 
@@ -52,7 +56,7 @@ const AppStateContext = createContext({} as AppStateContextProps);
 //   Provider
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [state, dispatch] = useReducer(appStateReducer, appData);
+  const [state, dispatch] = useImmerReducer(appStateReducer, appData);
   const { lists } = appData;
 
   const getTasksByListId = (id: string) => {
